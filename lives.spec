@@ -1,6 +1,6 @@
 %define name 	lives
 %define version 0.9.8.4
-%define release %mkrel 1
+%define release %mkrel 2
 
 Summary: 	Linux Video Editing System
 Name: 		%{name}
