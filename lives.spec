@@ -1,6 +1,6 @@
 %define name 	lives
 %define version 0.9.8.5
-%define release %mkrel 1
+%define release %mkrel 2
 
 Summary: 	Linux Video Editing System
 Name: 		%{name}
@@ -34,81 +34,57 @@ video effects and editing system.  It uses common tools for most of its work
 %prep
 %setup -q
 perl -p -i -e 's|"/usr/local/"|&get_home_dir||g' smogrify
-#perl -pi -e 's/python2.3/python/' $(grep -l  -r -i bin/python2 . )
 
 %build
 %configure2_5x
-%make libvis_wo_CFLAGS="`pkg-config --cflags libvisual-0.4` -fPIC"
+%make
 
 %install
 rm -fr $RPM_BUILD_ROOT
-%makeinstall
-rm -fr $RPM_BUILD_ROOT/%_docdir/LiVES-%version
+
+mkdir -p $RPM_BUILD_ROOT%{_datadir}/{applications,pixmaps}
+make DESTDIR=$RPM_BUILD_ROOT install
+
 %find_lang lives
-cp smogrify midistart midistop $RPM_BUILD_ROOT/%_bindir
-cd $RPM_BUILD_ROOT/%_datadir/%name/themes
-rm -fr `find -name '.xvpics'`
-cd $RPM_BUILD_ROOT/%_bindir
-rm -fr lives
-ln -s lives-exe lives
 rm -fr $RPM_BUILD_ROOT/%_docdir
 
-# menu
-mkdir -p $RPM_BUILD_ROOT%{_menudir}
-(cd $RPM_BUILD_ROOT
-cat > $RPM_BUILD_ROOT%{_menudir}/%{name} <<EOF
-?package(%{name}):\
-needs="x11"\
-section="Multimedia/Video"\
-title="LiVES"\
-longtitle="GTK2 Video Editing System"\
-command="%{name}-exe"\
-icon="%name.png"\
-xdg="true"
-EOF
-)
-
-mkdir -p $RPM_BUILD_ROOT%{_datadir}/applications
-cat > $RPM_BUILD_ROOT%{_datadir}/applications/mandriva-%{name}.desktop << EOF
-[Desktop Entry]
-Name=LiVES
-Comment=%{summary}
-Exec=%{_bindir}/%{name}-exe
-Icon=%{name}
-Terminal=false
-Type=Application
-Categories=GTK;X-MandrivaLinux-Multimedia-Video;AudioVideo;Video;AudioVideoEditing;
-Encoding=UTF-8
-EOF
-
+desktop-file-install \
+	--vendor="" \
+	--add-category="AudioVideoEditing" \
+	--add-category="X-MandrivaLinux-Multimedia-Video" \
+	--remove-category="Multimedia" \
+	--dir $RPM_BUILD_ROOT%{_datadir}/applications \
+	$RPM_BUILD_ROOT%{_datadir}/applications/LiVES.desktop
+sed -i 's/lives.xpm/lives/' \
+	$RPM_BUILD_ROOT%{_datadir}/applications/LiVES.desktop
+rm -f $RPM_BUILD_ROOT%{_datadir}/pixmaps/lives.xpm
 
 # icons
-mkdir -p $RPM_BUILD_ROOT/%_miconsdir
-cp %SOURCE1 $RPM_BUILD_ROOT/%_miconsdir/%name.png
-mkdir -p $RPM_BUILD_ROOT/%_iconsdir
-cp %SOURCE2 $RPM_BUILD_ROOT/%_iconsdir/%name.png
-mkdir -p $RPM_BUILD_ROOT/%_liconsdir
-cp %SOURCE3 $RPM_BUILD_ROOT/%_liconsdir/%name.png
+mkdir -p $RPM_BUILD_ROOT%{_iconsdir}/hicolor/{16x16,32x32,48x48}/apps
+install -m 644 %{_sourcedir}/lives-16.png \
+	$RPM_BUILD_ROOT%{_iconsdir}/hicolor/16x16/apps/%{name}.png
+install -m 644 %{_sourcedir}/lives-32.png \
+	$RPM_BUILD_ROOT%{_iconsdir}/hicolor/32x32/apps/%{name}.png
+install -m 644 %{_sourcedir}/lives-48.png \
+	$RPM_BUILD_ROOT%{_iconsdir}/hicolor/48x48/apps/%{name}.png
 
 %clean
 rm -rf $RPM_BUILD_ROOT
 
 %post 
-%{update_menus}
+%update_menus
+%update_icon_cache hicolor
 
 %postun 
-%{clean_menus}
+%clean_menus
+%update_icon_cache hicolor
 
 %files -f lives.lang
 %defattr(-,root,root,0755)
-%doc AUTHORS BUGS C* FEATURES GETTING* NEWS README*
-%doc OMC/*.txt RFX/*
+%doc AUTHORS BUGS C* docs/*.txt FEATURES GETTING*
+%doc NEWS OMC/*.txt README* RFX/*
 %_bindir/*
 %_datadir/%name
-%_menudir/%name
-%{_datadir}/applications/mandriva-%{name}.desktop
-%_iconsdir/%name.png
-%_liconsdir/%name.png
-%_miconsdir/%name.png
-
+%{_datadir}/applications/LiVES.desktop
+%{_iconsdir}/hicolor/*/apps/%{name}.png
 
