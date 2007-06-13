@@ -16,6 +16,7 @@ Group: 		Video
 BuildRoot:      %{_tmppath}/%{name}-buildroot
 BuildRequires: 	gtk2-devel
 BuildRequires:	bison
+BuildRequires:	desktop-file-utils
 BuildRequires:  ImageMagick libmjpegtools-devel SDL-devel
 BuildRequires: cairo-devel
 Requires:	xmms mplayer mencoder sox ImageMagick 
