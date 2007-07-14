@@ -18,7 +18,7 @@ BuildRequires: 	gtk2-devel
 BuildRequires:	bison
 BuildRequires:	desktop-file-utils
 BuildRequires:  ImageMagick libmjpegtools-devel SDL-devel
-BuildRequires: cairo-devel
+BuildRequires: cairo-devel gpm-devel
 Requires:	xmms mplayer mencoder sox ImageMagick 
 Requires:	cdrecord-cdda2wav ffmpeg
 
@@ -54,6 +54,7 @@ desktop-file-install \
 	--add-category="AudioVideoEditing" \
 	--add-category="X-MandrivaLinux-Multimedia-Video" \
 	--remove-category="Multimedia" \
+	--remove-category="Multimedia-Video" \
 	--dir $RPM_BUILD_ROOT%{_datadir}/applications \
 	$RPM_BUILD_ROOT%{_datadir}/applications/LiVES.desktop
 sed -i 's/lives.xpm/lives/' \
