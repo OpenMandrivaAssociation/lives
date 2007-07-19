@@ -1,6 +1,6 @@
 %define name 	lives
 %define version 0.9.8.6
-%define release %mkrel 1
+%define release %mkrel 2
 
 Summary: 	Linux Video Editing System
 Name: 		%{name}
@@ -17,10 +17,17 @@ BuildRoot:      %{_tmppath}/%{name}-buildroot
 BuildRequires: 	gtk2-devel
 BuildRequires:	bison
 BuildRequires:	desktop-file-utils
-BuildRequires:  ImageMagick libmjpegtools-devel SDL-devel
-BuildRequires: cairo-devel gpm-devel
+BuildRequires:  ImageMagick
+BuildRequires:	libmjpegtools-devel
+BuildRequires:	SDL-devel
+BuildRequires:	cairo-devel
+BuildRequires:	gpm-devel
+BuildRequires:	jackit-devel
+BuildRequires:	libtheora-devel
 Requires:	xmms mplayer mencoder sox ImageMagick 
-Requires:	cdrecord-cdda2wav ffmpeg
+Requires:	cdrecord-cdda2wav
+Requires:	xset
+Requires:	gdk-pixbuf-loaders
 
 %if %mdkversion > 1019
 BuildRequires:	libvisual-devel >= 0.1.7
