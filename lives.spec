@@ -13,7 +13,6 @@ Source3:	%name-48.png
 URL: 		http://www.xs4all.nl/~salsaman/lives
 License: 	GPL
 Group: 		Video
-BuildRoot:      %{_tmppath}/%{name}-buildroot
 BuildRequires: 	gtk2-devel
 BuildRequires:	bison
 BuildRequires:	desktop-file-utils
