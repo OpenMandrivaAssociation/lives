@@ -1,6 +1,6 @@
 %define name 	lives
-%define version 0.9.8.6
-%define release %mkrel 2
+%define version 0.9.8.7
+%define release %mkrel 1
 
 Summary: 	Linux Video Editing System
 Name: 		%{name}
@@ -11,7 +11,7 @@ Source1:	%name-16.png
 Source2:	%name-32.png
 Source3:	%name-48.png
 URL: 		http://www.xs4all.nl/~salsaman/lives
-License: 	GPL
+License: 	GPLv3+
 Group: 		Video
 BuildRequires: 	gtk2-devel
 BuildRequires:	bison
