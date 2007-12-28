@@ -10,12 +10,12 @@ Source0: 	http://www.xs4all.nl/~salsaman/lives/current/LiVES-%version.tar.bz2
 Source1:	%name-16.png
 Source2:	%name-32.png
 Source3:	%name-48.png
+Patch0:		LiVES-0.9.8.7-fix-desktop-item.patch
 URL: 		http://www.xs4all.nl/~salsaman/lives
 License: 	GPLv3+
 Group: 		Video
 BuildRequires: 	gtk2-devel
 BuildRequires:	bison
-BuildRequires:	desktop-file-utils
 BuildRequires:  ImageMagick
 BuildRequires:	libmjpegtools-devel
 BuildRequires:	SDL-devel
@@ -40,6 +40,7 @@ video effects and editing system.  It uses common tools for most of its work
 
 %prep
 %setup -q
+%patch0 -p0
 perl -p -i -e 's|"/usr/local/"|&get_home_dir||g' smogrify
 
 %build
@@ -55,16 +56,6 @@ make DESTDIR=$RPM_BUILD_ROOT install
 %find_lang lives
 rm -fr $RPM_BUILD_ROOT/%_docdir
 
-desktop-file-install \
-	--vendor="" \
-	--add-category="AudioVideoEditing" \
-	--add-category="X-MandrivaLinux-Multimedia-Video" \
-	--remove-category="Multimedia" \
-	--remove-category="Multimedia-Video" \
-	--dir $RPM_BUILD_ROOT%{_datadir}/applications \
-	$RPM_BUILD_ROOT%{_datadir}/applications/LiVES.desktop
-sed -i 's/lives.xpm/lives/' \
-	$RPM_BUILD_ROOT%{_datadir}/applications/LiVES.desktop
 rm -f $RPM_BUILD_ROOT%{_datadir}/pixmaps/lives.xpm
 
 # icons
@@ -95,4 +86,3 @@ rm -rf $RPM_BUILD_ROOT
 %_datadir/%name
 %{_datadir}/applications/LiVES.desktop
 %{_iconsdir}/hicolor/*/apps/%{name}.png
-
