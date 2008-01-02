@@ -14,6 +14,7 @@ Patch0:		LiVES-0.9.8.7-fix-desktop-item.patch
 URL: 		http://www.xs4all.nl/~salsaman/lives
 License: 	GPLv3+
 Group: 		Video
+BuildRoot:      %{_tmppath}/%{name}-buildroot
 BuildRequires: 	gtk2-devel
 BuildRequires:	bison
 BuildRequires:  ImageMagick
