@@ -71,13 +71,17 @@ install -m 644 %{_sourcedir}/lives-48.png \
 %clean
 rm -rf $RPM_BUILD_ROOT
 
+%if %mdkversion < 200900
 %post 
 %update_menus
 %update_icon_cache hicolor
+%endif
 
+%if %mdkversion < 200900
 %postun 
 %clean_menus
 %update_icon_cache hicolor
+%endif
 
 %files -f lives.lang
 %defattr(-,root,root,0755)
