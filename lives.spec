@@ -17,14 +17,14 @@ Group: 		Video
 BuildRoot:      %{_tmppath}/%{name}-buildroot
 BuildRequires: 	gtk2-devel
 BuildRequires:	bison
-BuildRequires:  ImageMagick
+BuildRequires:  imagemagick
 BuildRequires:	libmjpegtools-devel
 BuildRequires:	SDL-devel
 BuildRequires:	cairo-devel
 BuildRequires:	gpm-devel
 BuildRequires:	jackit-devel
 BuildRequires:	libtheora-devel
-Requires:	xmms mplayer mencoder sox ImageMagick 
+Requires:	xmms mplayer mencoder sox imagemagick
 Requires:	cdrecord-cdda2wav
 Requires:	xset
 Requires:	gdk-pixbuf-loaders
