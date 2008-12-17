@@ -75,7 +75,7 @@ rm -fr $RPM_BUILD_ROOT
 %find_lang lives
 
 find %buildroot%_libdir/%name -name *.la|xargs rm
-rm -f %buildroot%_datadir/doc
+rm -fr %buildroot%_datadir/doc
 rm -f %buildroot%_datadir/pixmaps/lives.xpm
 
 # icons
