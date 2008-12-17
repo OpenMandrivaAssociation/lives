@@ -24,6 +24,7 @@ BuildRequires:	cairo-devel
 BuildRequires:	gpm-devel
 BuildRequires:	jackit-devel
 BuildRequires:	libtheora-devel
+BuildRequires:	libsamplerate-devel
 Requires:	xmms mplayer mencoder sox imagemagick
 Requires:	cdrecord-cdda2wav
 Requires:	xset
