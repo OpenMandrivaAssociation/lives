@@ -2,6 +2,10 @@
 %define version 0.9.9.5
 %define release %mkrel 1
 
+%define major 0
+%define libname %mklibname weed %major
+%define develname %mklibname -d weed
+
 Summary: 	Linux Video Editing System
 Name: 		%{name}
 Version: 	%{version}
@@ -30,16 +34,29 @@ Requires:	xmms mplayer mencoder sox imagemagick
 Requires:	cdrecord-cdda2wav
 Requires:	xset
 Requires:	gdk-pixbuf-loaders
-
-%if %mdkversion > 1019
 BuildRequires:	libvisual-devel >= 0.1.7
 Requires:	libvisual-plugins
-%endif
 
 %description
 The Linux Video Editing System (LiVES) is intended to be a simple yet powerful
 video effects and editing system.  It uses common tools for most of its work
 (mplayer, ImageMagick, GTK+, sox).
+
+%package -n %libname
+Summary:	Linux Video Editing System - shared libs
+Group:		Video
+
+%description -n %libname
+This package contains shared libs for LiVES.
+
+%package -n %develname
+Summary:	Linux Video Editing System - Development files
+Group:		Video
+Requires:	%libname = %version
+Provides:	%name-devel = %version-%release
+
+%description -n %develname
+This package contains development files needed to build LiVES plugins.
 
 %prep
 %setup -q
@@ -47,19 +64,19 @@ video effects and editing system.  It uses common tools for most of its work
 perl -p -i -e 's|"/usr/local/"|&get_home_dir||g' smogrify
 
 %build
-%configure2_5x
+%define _disable_ld_no_undefined 1
+%configure2_5x --disable-static
 %make
 
 %install
 rm -fr $RPM_BUILD_ROOT
-
-mkdir -p $RPM_BUILD_ROOT%{_datadir}/{applications,pixmaps}
-make DESTDIR=$RPM_BUILD_ROOT install
+%makeinstall_std
 
 %find_lang lives
-rm -fr $RPM_BUILD_ROOT/%_docdir
 
-rm -f $RPM_BUILD_ROOT%{_datadir}/pixmaps/lives.xpm
+find %buildroot%_libdir/%name -name *.la|xargs rm
+rm -f %buildroot%_datadir/doc
+rm -f %buildroot%_datadir/pixmaps/lives.xpm
 
 # icons
 mkdir -p $RPM_BUILD_ROOT%{_iconsdir}/hicolor/{16x16,32x32,48x48}/apps
@@ -91,5 +108,17 @@ rm -rf $RPM_BUILD_ROOT
 %doc NEWS OMC/*.txt README* RFX/*
 %_bindir/*
 %_datadir/%name
+%_libdir/%name
 %{_datadir}/applications/LiVES.desktop
 %{_iconsdir}/hicolor/*/apps/%{name}.png
+
+%files -n %libname
+%defattr(-,root,root,-)
+%_libdir/*.so.%{major}*
+
+%files -n %develname
+%defattr(-,root,root,-)
+%_includedir/weed
+%_libdir/*.so
+%_libdir/*.la
+%_libdir/*.a
