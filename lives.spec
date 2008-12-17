@@ -1,6 +1,6 @@
 %define name 	lives
-%define version 0.9.9.1
-%define release %mkrel 2
+%define version 0.9.9.5
+%define release %mkrel 1
 
 Summary: 	Linux Video Editing System
 Name: 		%{name}
@@ -10,7 +10,7 @@ Source0: 	http://www.xs4all.nl/~salsaman/lives/current/LiVES-%version.tar.bz2
 Source1:	%name-16.png
 Source2:	%name-32.png
 Source3:	%name-48.png
-Patch0:		LiVES-0.9.8.7-fix-desktop-item.patch
+Patch0:		LiVES-0.9.9.5-fix-desktop-item.patch
 URL: 		http://www.xs4all.nl/~salsaman/lives
 License: 	GPLv3+
 Group: 		Video
