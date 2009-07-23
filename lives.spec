@@ -1,5 +1,5 @@
 %define name 	lives
-%define version 0.9.9.9
+%define version 1.0.0
 %define release %mkrel 1
 
 %define major 0
@@ -14,9 +14,6 @@ Source0: 	http://www.xs4all.nl/~salsaman/lives/current/LiVES-%version.tar.bz2
 Source1:	%name-16.png
 Source2:	%name-32.png
 Source3:	%name-48.png
-# make desktop file validate with desktop-file-validate
-# patch sent upstream by fhimpe on 03 Jun 2009
-Patch0:		LiVES-0.9.9.5-fix-desktop-item.patch
 URL: 		http://lives.sourceforge.net/
 License: 	GPLv3+
 Group: 		Video
@@ -62,7 +59,6 @@ This package contains development files needed to build LiVES plugins.
 
 %prep
 %setup -q
-%patch0 -p0
 perl -p -i -e 's|"/usr/local/"|&get_home_dir||g' smogrify
 
 %build
