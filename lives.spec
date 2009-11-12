@@ -1,6 +1,6 @@
 %define name 	lives
 %define version 1.1.5
-%define release %mkrel 1
+%define release %mkrel 2
 
 %define major 0
 %define libname %mklibname weed %major
@@ -14,6 +14,7 @@ Source0: 	http://www.xs4all.nl/~salsaman/lives/current/LiVES-%version.tar.bz2
 Source1:	%name-16.png
 Source2:	%name-32.png
 Source3:	%name-48.png
+Patch0:         lives-1.1.5-makefile.patch
 URL: 		http://lives.sourceforge.net/
 License: 	GPLv3+
 Group: 		Video
@@ -59,6 +60,7 @@ This package contains development files needed to build LiVES plugins.
 
 %prep
 %setup -q
+%patch0 -p1 -b .makefile
 perl -p -i -e 's|"/usr/local/"|&get_home_dir||g' smogrify
 
 %build
