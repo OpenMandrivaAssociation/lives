@@ -1,5 +1,5 @@
 %define name 	lives
-%define version 1.2.0
+%define version 1.2.1
 %define release %mkrel 1
 
 %define major 0
