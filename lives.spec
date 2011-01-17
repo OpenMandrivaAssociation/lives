@@ -1,27 +1,27 @@
-%define name 	lives
-%define version 1.3.4
-%define release %mkrel 1
+%define	name	lives
+%define	version	1.3.10
+%define	release	%mkrel 1
 
 %define major 0
 %define libname %mklibname weed %major
 %define develname %mklibname -d weed
 
-Summary: 	Linux Video Editing System
-Name: 		%{name}
-Version: 	%{version}
-Release: 	%{release}
-Source0: 	http://www.xs4all.nl/~salsaman/lives/current/LiVES-%version.tar.bz2
+Summary:	Linux Video Editing System
+Name:		%{name}
+Version:	%{version}
+Release:	%{release}
+Source0:	http://www.xs4all.nl/~salsaman/lives/current/LiVES-%version.tar.bz2
 Source1:	%name-16.png
 Source2:	%name-32.png
 Source3:	%name-48.png
-Patch0:         lives-1.1.5-makefile.patch
-URL: 		http://lives.sourceforge.net/
-License: 	GPLv3+
-Group: 		Video
-BuildRoot:      %{_tmppath}/%{name}-buildroot
-BuildRequires: 	gtk2-devel
+Patch0:		lives-1.1.5-makefile.patch
+URL:		http://lives.sourceforge.net/
+License:	GPLv3+
+Group:		Video
+BuildRoot:	%{_tmppath}/%{name}-buildroot
+BuildRequires:	gtk2-devel
 BuildRequires:	bison
-BuildRequires:  imagemagick
+BuildRequires:	imagemagick
 BuildRequires:	libmjpegtools-devel
 BuildRequires:	SDL-devel
 BuildRequires:	cairo-devel
@@ -30,6 +30,8 @@ BuildRequires:	jackit-devel
 BuildRequires:	libtheora-devel
 BuildRequires:	libsamplerate-devel
 BuildRequires:	celt-devel
+BuildRequires:	libpulseaudio-devel
+BuildRequires:	libpth-devel
 Requires:	xmms mplayer mencoder sox imagemagick
 Requires:	cdrecord-cdda2wav
 Requires:	xset
@@ -65,7 +67,7 @@ perl -p -i -e 's|"/usr/local/"|&get_home_dir||g' smogrify
 
 %build
 %define _disable_ld_no_undefined 1
-%configure2_5x --disable-static
+%configure2_5x --disable-static --enable-threads=pth
 %make
 
 %install
@@ -79,13 +81,13 @@ rm -fr %buildroot%_datadir/doc
 rm -f %buildroot%_datadir/pixmaps/lives.xpm
 
 # icons
-mkdir -p $RPM_BUILD_ROOT%{_iconsdir}/hicolor/{16x16,32x32,48x48}/apps
-install -m 644 %{_sourcedir}/lives-16.png \
-	$RPM_BUILD_ROOT%{_iconsdir}/hicolor/16x16/apps/%{name}.png
-install -m 644 %{_sourcedir}/lives-32.png \
-	$RPM_BUILD_ROOT%{_iconsdir}/hicolor/32x32/apps/%{name}.png
-install -m 644 %{_sourcedir}/lives-48.png \
-	$RPM_BUILD_ROOT%{_iconsdir}/hicolor/48x48/apps/%{name}.png
+mkdir -p %{buildroot}/%{_iconsdir}/hicolor/{16x16,32x32,48x48}/apps
+install -m 644 %{SOURCE1} \
+	%{buildroot}/%{_iconsdir}/hicolor/16x16/apps/%{name}.png
+install -m 644 %{SOURCE2} \
+	%{buildroot}/%{_iconsdir}/hicolor/32x32/apps/%{name}.png
+install -m 644 %{SOURCE3} \
+	%{buildroot}/%{_iconsdir}/hicolor/48x48/apps/%{name}.png
 
 %clean
 rm -rf $RPM_BUILD_ROOT
