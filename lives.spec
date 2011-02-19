@@ -1,5 +1,5 @@
 %define	name	lives
-%define	version	1.3.10
+%define	version	1.4.0
 %define	release	%mkrel 1
 
 %define major 0
@@ -14,7 +14,7 @@ Source0:	http://www.xs4all.nl/~salsaman/lives/current/LiVES-%version.tar.bz2
 Source1:	%name-16.png
 Source2:	%name-32.png
 Source3:	%name-48.png
-Patch0:		lives-1.1.5-makefile.patch
+Patch0:		lives-1.4.0-makefile.patch
 URL:		http://lives.sourceforge.net/
 License:	GPLv3+
 Group:		Video
@@ -124,3 +124,4 @@ rm -rf $RPM_BUILD_ROOT
 %_libdir/*.so
 %_libdir/*.la
 %_libdir/*.a
+%_libdir/pkgconfig/*.pc
