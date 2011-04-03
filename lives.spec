@@ -32,6 +32,7 @@ BuildRequires:	libsamplerate-devel
 BuildRequires:	celt-devel
 BuildRequires:	libpulseaudio-devel
 BuildRequires:	libpth-devel
+BuildRequires:	libv4l-devel
 Requires:	xmms mplayer mencoder sox imagemagick
 Requires:	cdrecord-cdda2wav
 Requires:	xset
