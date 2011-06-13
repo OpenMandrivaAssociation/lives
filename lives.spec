@@ -1,6 +1,6 @@
 %define	name	lives
-%define	version	1.4.2
-%define	release	%mkrel 3
+%define	version	1.4.3
+%define	release	%mkrel 1
 
 %define major 0
 %define libname %mklibname weed %major
@@ -10,7 +10,7 @@ Summary:	Linux Video Editing System
 Name:		%{name}
 Version:	%{version}
 Release:	%{release}
-Source0:	http://www.xs4all.nl/~salsaman/lives/current/LiVES-%version.tar.bz2
+Source0:	http://salsaman.home.xs4all.nl/lives/current/LiVES-%version.tar.bz2
 Source1:	%name-16.png
 Source2:	%name-32.png
 Source3:	%name-48.png
