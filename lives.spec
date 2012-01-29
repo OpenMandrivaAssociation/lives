@@ -18,7 +18,6 @@ Patch0:		lives-1.4.2-makefile.patch
 URL:		http://lives.sourceforge.net/
 License:	GPLv3+
 Group:		Video
-BuildRoot:	%{_tmppath}/%{name}-buildroot
 BuildRequires:	gtk2-devel
 BuildRequires:	bison
 BuildRequires:	imagemagick
@@ -64,12 +63,13 @@ This package contains development files needed to build LiVES plugins.
 %prep
 %setup -q
 %patch0 -p1 -b .makefile
+aclocal
 automake
 perl -p -i -e 's|"/usr/local/"|&get_home_dir||g' smogrify
 
 %build
 %define _disable_ld_no_undefined 1
-%configure --disable-static --enable-threads=posix
+%configure2_5x --disable-static --enable-threads=posix
 %make
 
 %install
