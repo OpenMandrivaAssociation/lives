@@ -1,5 +1,5 @@
 %define	name	lives
-%define	version	1.4.4
+%define	version	1.6.0
 %define	release	%mkrel 1
 
 %define major 0
@@ -10,7 +10,7 @@ Summary:	Linux Video Editing System
 Name:		%{name}
 Version:	%{version}
 Release:	%{release}
-Source0:	http://salsaman.home.xs4all.nl/lives/current/LiVES-%version.tar.bz2
+Source0:	http://www.xs4all.nl/%7Esalsaman/lives/current/LiVES-%{version}.tar.bz2
 Source1:	%name-16.png
 Source2:	%name-32.png
 Source3:	%name-48.png
@@ -64,22 +64,24 @@ This package contains development files needed to build LiVES plugins.
 %prep
 %setup -q
 %patch0 -p1 -b .makefile
+automake
 perl -p -i -e 's|"/usr/local/"|&get_home_dir||g' smogrify
 
 %build
 %define _disable_ld_no_undefined 1
-%configure2_5x --disable-static --enable-threads=pth
+%configure --disable-static --enable-threads=posix
 %make
 
 %install
-rm -fr $RPM_BUILD_ROOT
 %makeinstall_std
 
 %find_lang lives
 
 find %buildroot%_libdir/%name -name *.la|xargs rm
-rm -fr %buildroot%_datadir/doc
+#rm -fr %buildroot%_datadir/doc
 rm -f %buildroot%_datadir/pixmaps/lives.xpm
+rm -rf %{buildroot}/%{_datadir}/app-install
+rm -f %{buildroot}/%{_libdir}/*.{a,la}
 
 # icons
 mkdir -p %{buildroot}/%{_iconsdir}/hicolor/{16x16,32x32,48x48}/apps
@@ -90,25 +92,9 @@ install -m 644 %{SOURCE2} \
 install -m 644 %{SOURCE3} \
 	%{buildroot}/%{_iconsdir}/hicolor/48x48/apps/%{name}.png
 
-%clean
-rm -rf $RPM_BUILD_ROOT
-
-%if %mdkversion < 200900
-%post 
-%update_menus
-%update_icon_cache hicolor
-%endif
-
-%if %mdkversion < 200900
-%postun 
-%clean_menus
-%update_icon_cache hicolor
-%endif
-
 %files -f lives.lang
 %defattr(-,root,root,0755)
-%doc AUTHORS BUGS C* docs/*.txt FEATURES GETTING*
-%doc NEWS OMC/*.txt README* RFX/*
+%doc %{_docdir}/%{name}-%{version}
 %_bindir/*
 %_datadir/%name
 %_libdir/%name
@@ -123,6 +109,6 @@ rm -rf $RPM_BUILD_ROOT
 %defattr(-,root,root,-)
 %_includedir/weed
 %_libdir/*.so
-%_libdir/*.la
-%_libdir/*.a
+#%_libdir/*.la
+#%_libdir/*.a
 %_libdir/pkgconfig/*.pc
