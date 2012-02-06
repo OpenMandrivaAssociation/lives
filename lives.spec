@@ -1,6 +1,10 @@
 %define	name	lives
-%define	version	1.6.0
+%define	version	1.6.1
+%if %{mdvver} >= 2011
+%define	release	1
+%else
 %define	release	%mkrel 1
+%endif
 
 %define major 0
 %define libname %mklibname weed %major
@@ -14,7 +18,8 @@ Source0:	http://www.xs4all.nl/%7Esalsaman/lives/current/LiVES-%{version}.tar.bz2
 Source1:	%name-16.png
 Source2:	%name-32.png
 Source3:	%name-48.png
-Patch0:		lives-1.4.2-makefile.patch
+Patch0:		lives-1.6.1-mdv-symlink.patch
+Patch1:		lives-1.6.1-mdv-format_security.patch
 URL:		http://lives.sourceforge.net/
 License:	GPLv3+
 Group:		Video
@@ -62,7 +67,8 @@ This package contains development files needed to build LiVES plugins.
 
 %prep
 %setup -q
-%patch0 -p1 -b .makefile
+%patch0 -p1 -b .symlink
+%patch1 -p1 -b .format
 aclocal
 automake
 perl -p -i -e 's|"/usr/local/"|&get_home_dir||g' smogrify
