@@ -1,19 +1,11 @@
-%define	name	lives
-%define	version	1.6.1
-%if %{mdvver} >= 2011
-%define	release	1
-%else
-%define	release	%mkrel 1
-%endif
-
 %define major 0
 %define libname %mklibname weed %major
 %define develname %mklibname -d weed
 
 Summary:	Linux Video Editing System
-Name:		%{name}
-Version:	%{version}
-Release:	%{release}
+Name:		lives
+Version:	1.6.3
+Release:	1
 Source0:	http://www.xs4all.nl/%7Esalsaman/lives/current/LiVES-%{version}.tar.bz2
 Source1:	%name-16.png
 Source2:	%name-32.png
@@ -34,9 +26,10 @@ BuildRequires:	jackit-devel
 BuildRequires:	libtheora-devel
 BuildRequires:	libsamplerate-devel
 BuildRequires:	celt-devel
-BuildRequires:	libpulseaudio-devel
-BuildRequires:	libpth-devel
+BuildRequires:	pulseaudio-devel
+BuildRequires:	pth-devel
 BuildRequires:	libv4l-devel
+BuildRequires:	ffmpeg0.7-devel
 Requires:	xmms mplayer mencoder sox imagemagick
 Requires:	cdrecord-cdda2wav
 Requires:	xset
@@ -68,14 +61,16 @@ This package contains development files needed to build LiVES plugins.
 %prep
 %setup -q
 %patch0 -p1 -b .symlink
-%patch1 -p1 -b .format
+#patch1 -p1 -b .format
 aclocal
 automake
 perl -p -i -e 's|"/usr/local/"|&get_home_dir||g' smogrify
 
 %build
 %define _disable_ld_no_undefined 1
-%configure2_5x --disable-static --enable-threads=posix
+%configure2_5x \
+	--disable-static \
+	--enable-threads=posix
 %make
 
 %install
