@@ -1,0 +1,26 @@
+Index: lives-1.6.1/src/main.c
+===================================================================
+--- lives-1.6.1.orig/src/main.c
++++ lives-1.6.1/src/main.c
+@@ -5890,7 +5890,7 @@ void do_quick_switch (gint new_file) {
+   mainw->play_end=cfile->frames;
+ 
+   if (mainw->play_window!=NULL) {
+-    gchar *title=g_strdup_printf(_("LiVES: - Play Window"));
++    gchar *title=g_strdup_printf("%s", _("LiVES: - Play Window"));
+     gtk_window_set_title (GTK_WINDOW (mainw->play_window), title);
+     g_free(title);
+     if (mainw->double_size&&!mainw->fs&&(ohsize!=cfile->hsize||ovsize!=cfile->vsize)) {
+Index: lives-1.6.1/src/callbacks.c
+===================================================================
+--- lives-1.6.1.orig/src/callbacks.c
++++ lives-1.6.1/src/callbacks.c
+@@ -6347,7 +6347,7 @@ void on_open_new_audio_clicked (GtkButto
+ 							       -1,NULL,NULL,NULL)));
+     g_free(tmp);
+   }
+-  else g_snprintf(file_name,PATH_MAX,(char *)user_data);
++  else g_snprintf(file_name,PATH_MAX,"%s",(char *)user_data);
+ 
+   g_snprintf(mainw->audio_dir,PATH_MAX,"%s",file_name);
+   get_dirname(mainw->audio_dir);
