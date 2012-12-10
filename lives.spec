@@ -1,40 +1,44 @@
 %define major 0
-%define libname %mklibname weed %major
+%define libname %mklibname weed %{major}
 %define develname %mklibname -d weed
 
 Summary:	Linux Video Editing System
 Name:		lives
-Version:	1.6.3
-Release:	1
-Source0:	http://www.xs4all.nl/%7Esalsaman/lives/current/LiVES-%{version}.tar.bz2
-Source1:	%name-16.png
-Source2:	%name-32.png
-Source3:	%name-48.png
-Patch0:		lives-1.6.1-mdv-symlink.patch
-Patch1:		lives-1.6.1-mdv-format_security.patch
-URL:		http://lives.sourceforge.net/
+Version:	1.6.4
+Release:	2
 License:	GPLv3+
 Group:		Video
-BuildRequires:	gtk2-devel
+URL:		http://lives.sourceforge.net/
+Source0:	LiVES-%{version}.tar.bz2
+Source1:	%{name}-16.png
+Source2:	%{name}-32.png
+Source3:	%{name}-48.png
+Patch0:		lives-1.6.1-mdv-symlink.patch
+BuildRequires:	pkgconfig(gdk-2.0)
 BuildRequires:	bison
 BuildRequires:	imagemagick
-BuildRequires:	libmjpegtools-devel
-BuildRequires:	SDL-devel
-BuildRequires:	cairo-devel
+BuildRequires:	pkgconfig(mjpegtools)
+BuildRequires:	pkgconfig(sdl)
+BuildRequires:	pkgconfig(cairo)
 BuildRequires:	gpm-devel
-BuildRequires:	jackit-devel
-BuildRequires:	libtheora-devel
-BuildRequires:	libsamplerate-devel
-BuildRequires:	celt-devel
-BuildRequires:	pulseaudio-devel
-BuildRequires:	pth-devel
-BuildRequires:	libv4l-devel
-BuildRequires:	ffmpeg0.7-devel
-Requires:	xmms mplayer mencoder sox imagemagick
+BuildRequires:  pkgconfig(libavcodec)
+BuildRequires:	pkgconfig(jack)
+BuildRequires:	pkgconfig(theora)
+BuildRequires:	pkgconfig(samplerate)
+BuildRequires:	pkgconfig(celt)
+BuildRequires:	pkgconfig(libpulse)
+BuildRequires:	libpth-devel
+BuildRequires:	pkgconfig(libv4l1)
+BuildRequires:	pkgconfig(libvisual-0.4) >= 0.1.7
+BuildRequires:  perl-base
+Suggests:	xmms 
+Requires:	mplayer 
+Requires:	mencoder 
+Requires:	sox 
+Requires:	imagemagick
 Requires:	cdrecord-cdda2wav
 Requires:	xset
 Requires:	gdk-pixbuf-loaders
-BuildRequires:	libvisual-devel >= 0.1.7
 Requires:	libvisual-plugins
 
 %description
@@ -42,35 +46,32 @@ The Linux Video Editing System (LiVES) is intended to be a simple yet powerful
 video effects and editing system.  It uses common tools for most of its work
 (mplayer, ImageMagick, GTK+, sox).
 
-%package -n %libname
+%package -n %{libname}
 Summary:	Linux Video Editing System - shared libs
 Group:		Video
 
-%description -n %libname
+%description -n %{libname}
 This package contains shared libs for LiVES.
 
-%package -n %develname
+%package -n %{develname}
 Summary:	Linux Video Editing System - Development files
 Group:		Video
-Requires:	%libname = %version
-Provides:	%name-devel = %version-%release
+Requires:	%{libname} = %{version}-%{release}
+Provides:	%{name}-devel = %{version}-%{release}
 
-%description -n %develname
+%description -n %{develname}
 This package contains development files needed to build LiVES plugins.
 
 %prep
 %setup -q
 %patch0 -p1 -b .symlink
-#patch1 -p1 -b .format
 aclocal
 automake
 perl -p -i -e 's|"/usr/local/"|&get_home_dir||g' smogrify
 
 %build
 %define _disable_ld_no_undefined 1
-%configure2_5x \
-	--disable-static \
-	--enable-threads=posix
+%configure2_5x --disable-static --enable-threads=posix
 %make
 
 %install
@@ -79,7 +80,6 @@ perl -p -i -e 's|"/usr/local/"|&get_home_dir||g' smogrify
 %find_lang lives
 
 find %buildroot%_libdir/%name -name *.la|xargs rm
-#rm -fr %buildroot%_datadir/doc
 rm -f %buildroot%_datadir/pixmaps/lives.xpm
 rm -rf %{buildroot}/%{_datadir}/app-install
 rm -f %{buildroot}/%{_libdir}/*.{a,la}
@@ -94,22 +94,19 @@ install -m 644 %{SOURCE3} \
 	%{buildroot}/%{_iconsdir}/hicolor/48x48/apps/%{name}.png
 
 %files -f lives.lang
-%defattr(-,root,root,0755)
 %doc %{_docdir}/%{name}-%{version}
 %_bindir/*
-%_datadir/%name
-%_libdir/%name
+%_datadir/%{name}
+%_libdir/%{name}
 %{_datadir}/applications/LiVES.desktop
 %{_iconsdir}/hicolor/*/apps/%{name}.png
 
-%files -n %libname
-%defattr(-,root,root,-)
+%files -n %{libname}
 %_libdir/*.so.%{major}*
 
-%files -n %develname
-%defattr(-,root,root,-)
-%_includedir/weed
-%_libdir/*.so
-#%_libdir/*.la
-#%_libdir/*.a
-%_libdir/pkgconfig/*.pc
+%files -n %{develname}
+%{_includedir}/weed
+%{_libdir}/*.so
+%{_libdir}/pkgconfig/*.pc
+
+
