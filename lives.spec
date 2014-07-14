@@ -4,7 +4,7 @@
 
 Summary:	Linux Video Editing System
 Name:		lives
-Version:	2.2.4
+Version:	2.2.5
 Release:	2
 License:	GPLv3+
 Group:		Video
