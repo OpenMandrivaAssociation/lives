@@ -22,7 +22,7 @@ Patch0:		lives-1.6.1-mdv-symlink.patch
 BuildRequires:	bison
 BuildRequires:	imagemagick
 BuildRequires:	gpm-devel
-BuildRequires:	libpth-devel
+BuildRequires:	pth-devel
 BuildRequires:	pkgconfig(cairo)
 BuildRequires:	pkgconfig(celt)
 BuildRequires:	pkgconfig(gdk-2.0)
