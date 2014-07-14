@@ -1,0 +1,2 @@
+# Thinks libvisual-plugins is bad
+addFilter("E: explicit-lib-dependency")

@@ -1,50 +1,73 @@
 %define major 0
 %define libname %mklibname weed %{major}
-%define develname %mklibname -d weed
+%define devname %mklibname -d weed
 
 Summary:	Linux Video Editing System
 Name:		lives
-Version:	1.6.4
+Version:	2.2.5
 Release:	2
 License:	GPLv3+
 Group:		Video
-URL:		http://lives.sourceforge.net/
-Source0:	LiVES-%{version}.tar.bz2
+Url:		http://lives.sourceforge.net/
+Source0:	http://www.xs4all.nl/~salsaman/lives/current/LiVES-%{version}.tar.bz2
 Source1:	%{name}-16.png
 Source2:	%{name}-32.png
 Source3:	%{name}-48.png
+Source100:  %{name}.rpmlintrc
 Patch0:		lives-1.6.1-mdv-symlink.patch
-BuildRequires:	pkgconfig(gdk-2.0)
+#
+# Reversed (or previously applied) patch detected!
+# Patch1:         lives-decoders.patch
+#
 BuildRequires:	bison
 BuildRequires:	imagemagick
-BuildRequires:	pkgconfig(mjpegtools)
-BuildRequires:	pkgconfig(sdl)
-BuildRequires:	pkgconfig(cairo)
 BuildRequires:	gpm-devel
-BuildRequires:  pkgconfig(libavcodec)
-BuildRequires:	pkgconfig(jack)
-BuildRequires:	pkgconfig(theora)
-BuildRequires:	pkgconfig(samplerate)
-BuildRequires:	pkgconfig(celt)
-BuildRequires:	pkgconfig(libpulse)
 BuildRequires:	libpth-devel
+BuildRequires:	pkgconfig(cairo)
+BuildRequires:	pkgconfig(celt)
+BuildRequires:	pkgconfig(gdk-2.0)
+BuildRequires:	pkgconfig(jack)
+BuildRequires:	ffmpeg-devel >= 2.0.1
+# lets stick with 2.0.1 in fresh untill 07 will be gone
+# or will provide no longer pkgconfig(libavcodec)
+#BuildRequires:	pkgconfig(libavcodec)
+BuildRequires:	pkgconfig(libpulse)
 BuildRequires:	pkgconfig(libv4l1)
 BuildRequires:	pkgconfig(libvisual-0.4) >= 0.1.7
-BuildRequires:  perl-base
-Suggests:	xmms 
-Requires:	mplayer 
-Requires:	mencoder 
-Requires:	sox 
-Requires:	imagemagick
+BuildRequires:	pkgconfig(mjpegtools)
+BuildRequires:	pkgconfig(samplerate)
+BuildRequires:	pkgconfig(sdl)
+BuildRequires:	pkgconfig(theora)
+BuildRequires:	tirpc-devel
 Requires:	cdrecord-cdda2wav
-Requires:	xset
+Requires:	dvgrab
+Requires:	frei0r-plugins
 Requires:	gdk-pixbuf-loaders
+Requires:	imagemagick
 Requires:	libvisual-plugins
+Requires:	mencoder
+Requires:	mkvtoolnix
+Requires:	mplayer
+Requires:	ogmtools
+Requires:	sox
+Requires:	vorbis-tools
+Requires:	xset
+Requires:	youtube-dl
 
 %description
 The Linux Video Editing System (LiVES) is intended to be a simple yet powerful
 video effects and editing system.  It uses common tools for most of its work
 (mplayer, ImageMagick, GTK+, sox).
+
+%files -f lives.lang
+%doc %{_docdir}/%{name}-%{version}
+%{_bindir}/*
+%{_datadir}/%{name}
+%{_libdir}/%{name}
+%{_datadir}/applications/LiVES.desktop
+%{_iconsdir}/hicolor/*/apps/%{name}.png
+
+#----------------------------------------------------------------------------
 
 %package -n %{libname}
 Summary:	Linux Video Editing System - shared libs
@@ -53,18 +76,43 @@ Group:		Video
 %description -n %{libname}
 This package contains shared libs for LiVES.
 
-%package -n %{develname}
+%files -n %{libname}
+%doc COPYING FEATURES NEWS README GETTING.STARTED 
+%{_libdir}/*.so.%{major}*
+
+#----------------------------------------------------------------------------
+
+%package -n %{devname}
 Summary:	Linux Video Editing System - Development files
 Group:		Video
 Requires:	%{libname} = %{version}-%{release}
 Provides:	%{name}-devel = %{version}-%{release}
 
-%description -n %{develname}
-This package contains development files needed to build LiVES plugins.
+%description -n %{devname}
+This package contains development files needed to build LiVES plug-ins.
+
+%files -n %{devname}
+%doc BUGS ABOUT-NLS AUTHORS
+%{_includedir}/weed
+%{_libdir}/*.so
+%{_libdir}/pkgconfig/*.pc
+
+#----------------------------------------------------------------------------
 
 %prep
 %setup -q
-%patch0 -p1 -b .symlink
+
+%patch0 -p1 -b .symlink~
+# Reversed (or previously applied) patch detected!
+# %%patch1 -p1 -b .decoders
+#
+
+# fix debug spurious-executable
+chmod a-x src/giw/{giwvslider,giwled,giwknob}.h
+chmod a-x src/giw/{giwvslider,giwled,giwknob}.c
+chmod a-x lives-plugins/weed-plugins/bump2d.c
+chmod a-x lives-plugins/weed-plugins/syna.h
+
 aclocal
 automake
 perl -p -i -e 's|"/usr/local/"|&get_home_dir||g' smogrify
@@ -77,12 +125,14 @@ perl -p -i -e 's|"/usr/local/"|&get_home_dir||g' smogrify
 %install
 %makeinstall_std
 
-%find_lang lives
 
-find %buildroot%_libdir/%name -name *.la|xargs rm
-rm -f %buildroot%_datadir/pixmaps/lives.xpm
+
+rm -f %{buildroot}%{_datadir}/pixmaps/lives.xpm
 rm -rf %{buildroot}/%{_datadir}/app-install
-rm -f %{buildroot}/%{_libdir}/*.{a,la}
+
+#fix linting
+chmod a-x %{buildroot}%{_libdir}/lives/plugins/effects/realtime/weed/data/fourKlives/songs/{examples,newlives,regrlives,roselives,modulations}.txt
+
 
 # icons
 mkdir -p %{buildroot}/%{_iconsdir}/hicolor/{16x16,32x32,48x48}/apps
@@ -93,20 +143,4 @@ install -m 644 %{SOURCE2} \
 install -m 644 %{SOURCE3} \
 	%{buildroot}/%{_iconsdir}/hicolor/48x48/apps/%{name}.png
 
-%files -f lives.lang
-%doc %{_docdir}/%{name}-%{version}
-%_bindir/*
-%_datadir/%{name}
-%_libdir/%{name}
-%{_datadir}/applications/LiVES.desktop
-%{_iconsdir}/hicolor/*/apps/%{name}.png
-
-%files -n %{libname}
-%_libdir/*.so.%{major}*
-
-%files -n %{develname}
-%{_includedir}/weed
-%{_libdir}/*.so
-%{_libdir}/pkgconfig/*.pc
-
-
+%find_lang lives
