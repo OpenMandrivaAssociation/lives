@@ -25,12 +25,9 @@ BuildRequires:	gpm-devel
 BuildRequires:	libpth-devel
 BuildRequires:	pkgconfig(cairo)
 BuildRequires:	pkgconfig(celt)
-BuildRequires:	pkgconfig(gdk-2.0)
+BuildRequires:	pkgconfig(gdk-3.0)
 BuildRequires:	pkgconfig(jack)
 BuildRequires:	ffmpeg-devel >= 2.0.1
-# lets stick with 2.0.1 in fresh untill 07 will be gone
-# or will provide no longer pkgconfig(libavcodec)
-#BuildRequires:	pkgconfig(libavcodec)
 BuildRequires:	pkgconfig(libpulse)
 BuildRequires:	pkgconfig(libv4l1)
 BuildRequires:	pkgconfig(libvisual-0.4) >= 0.1.7
@@ -42,7 +39,6 @@ BuildRequires:	tirpc-devel
 Requires:	cdrecord-cdda2wav
 Requires:	dvgrab
 Requires:	frei0r-plugins
-Requires:	gdk-pixbuf-loaders
 Requires:	imagemagick
 Requires:	libvisual-plugins
 Requires:	mencoder
