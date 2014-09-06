@@ -34,6 +34,11 @@ BuildRequires:	pkgconfig(sdl)
 BuildRequires:	pkgconfig(theora)
 BuildRequires:	tirpc-devel
 BuildRequires:	doxygen
+BuildRequires:	ladspa-devel
+BuildRequires:	frei0r-plugins-devel
+BuildRequires:	pkgconfig(libweed)
+
+
 
 
 Requires:	cdrecord-cdda2wav
