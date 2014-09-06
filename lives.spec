@@ -36,7 +36,7 @@ BuildRequires:	tirpc-devel
 BuildRequires:	doxygen
 BuildRequires:	ladspa-devel
 BuildRequires:	frei0r-plugins-devel
-BuildRequires:	pkgconfig(libweed)
+
 
 
 
