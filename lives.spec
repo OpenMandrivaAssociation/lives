@@ -33,6 +33,8 @@ BuildRequires:	pkgconfig(samplerate)
 BuildRequires:	pkgconfig(sdl)
 BuildRequires:	pkgconfig(theora)
 BuildRequires:	tirpc-devel
+BuildRequires:	doxygen
+
 
 Requires:	cdrecord-cdda2wav
 Requires:	dvgrab
