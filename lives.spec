@@ -5,7 +5,7 @@
 Summary:	Linux Video Editing System
 Name:		lives
 Version:	2.2.6
-Release:	1
+Release:	2
 License:	GPLv3+
 Group:		Video
 Url:		http://lives.sourceforge.net/
@@ -13,7 +13,7 @@ Source0:	http://www.xs4all.nl/~salsaman/lives/current/LiVES-%{version}.tar.bz2
 Source1:	%{name}-16.png
 Source2:	%{name}-32.png
 Source3:	%{name}-48.png
-Source100:  %{name}.rpmlintrc
+Source100:	%{name}.rpmlintrc
 Patch0:		lives-1.6.1-mdv-symlink.patch
 
 BuildRequires:	bison
@@ -22,7 +22,7 @@ BuildRequires:	gpm-devel
 BuildRequires:	pth-devel
 BuildRequires:	pkgconfig(cairo)
 BuildRequires:	pkgconfig(celt)
-BuildRequires:	pkgconfig(gdk-3.0) >= 3.10.0
+BuildRequires:	pkgconfig(gdk-3.0) 
 BuildRequires:	pkgconfig(jack)
 BuildRequires:	ffmpeg-devel >= 2.0.1
 BuildRequires:	pkgconfig(libpulse)
@@ -33,13 +33,17 @@ BuildRequires:	pkgconfig(samplerate)
 BuildRequires:	pkgconfig(sdl)
 BuildRequires:	pkgconfig(theora)
 BuildRequires:	tirpc-devel
+# full featured build for MRB
+# TODO: Push in contrib.Sflo
 BuildRequires:	doxygen
 BuildRequires:	ladspa-devel
 BuildRequires:	frei0r-plugins-devel
-
-
-
-
+BuildRequires:	pkgconfig(glee)
+BuildRequires:	pkgconfig(libunicap)
+BuildRequires:	pkgconfig(liboil-0.3)
+BuildRequires:	pkgconfig(libavc1394)
+BuildRequires:	pkgconfig(glu)
+#
 
 Requires:	cdrecord-cdda2wav
 Requires:	dvgrab
