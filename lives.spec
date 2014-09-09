@@ -122,6 +122,7 @@ perl -p -i -e 's|"/usr/local/"|&get_home_dir||g' smogrify
 
 %build
 export CC=gcc
+export CXX=g++
 %define _disable_ld_no_undefined 1
 %configure2_5x --disable-static --enable-threads=posix
 export LDFLAGS="$LDFLAGS -lpulse"
