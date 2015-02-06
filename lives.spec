@@ -5,7 +5,7 @@
 Summary:	Linux Video Editing System
 Name:		lives
 Version:	2.2.6
-Release:	2
+Release:	3
 License:	GPLv3+
 Group:		Video
 Url:		http://lives.sourceforge.net/
