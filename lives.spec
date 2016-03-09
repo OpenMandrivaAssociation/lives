@@ -4,17 +4,17 @@
 
 Summary:	Linux Video Editing System
 Name:		lives
-Version:	2.2.6
-Release:	3
+Version:	2.6.0
+Release:	1
 License:	GPLv3+
 Group:		Video
-Url:		http://lives.sourceforge.net/
-Source0:	http://www.xs4all.nl/~salsaman/lives/current/LiVES-%{version}.tar.bz2
+Url:		http://lives-video.com
+Source0:	http://lives-video.com/releases/LiVES-%{version}.tar.bz2
 Source1:	%{name}-16.png
 Source2:	%{name}-32.png
 Source3:	%{name}-48.png
 Source100:	%{name}.rpmlintrc
-Patch0:		lives-1.6.1-mdv-symlink.patch
+Patch1:		ffmpeg3.0.patch
 
 BuildRequires:	bison
 BuildRequires:	imagemagick
@@ -39,7 +39,6 @@ BuildRequires:	doxygen
 BuildRequires:	ladspa-devel
 BuildRequires:	frei0r-plugins-devel
 BuildRequires:	pkgconfig(glee)
-BuildRequires:	pkgconfig(libunicap)
 BuildRequires:	pkgconfig(liboil-0.3)
 BuildRequires:	pkgconfig(libavc1394)
 BuildRequires:	pkgconfig(glu)
@@ -107,8 +106,7 @@ This package contains development files needed to build LiVES plug-ins.
 %prep
 %setup -q
 
-%patch0 -p1 -b .symlink~
-
+%apply_patches
 
 # fix debug spurious-executable
 chmod a-x src/giw/{giwvslider,giwled,giwknob}.h
@@ -124,7 +122,7 @@ perl -p -i -e 's|"/usr/local/"|&get_home_dir||g' smogrify
 export CC=gcc
 export CXX=g++
 %define _disable_ld_no_undefined 1
-%configure2_5x --disable-static --enable-threads=posix
+%configure2_5x --enable-threads=posix --disable-OSC
 export LDFLAGS="$LDFLAGS -lpulse"
 %make
 
