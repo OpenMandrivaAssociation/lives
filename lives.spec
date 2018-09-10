@@ -14,7 +14,7 @@ Source1:	%{name}-16.png
 Source2:	%{name}-32.png
 Source3:	%{name}-48.png
 Source100:	%{name}.rpmlintrc
-Patch1:		ffmpeg3.0.patch
+#Patch1:		ffmpeg3.0.patch
 
 BuildRequires:  pkgconfig(alsa)
 BuildRequires:  pkgconfig(fftw3f)
@@ -113,7 +113,7 @@ This package contains development files needed to build LiVES plug-ins.
 %prep
 %setup -q
 
-%apply_patches
+#apply_patches
 
 # fix debug spurious-executable
 chmod a-x src/giw/{giwvslider,giwled,giwknob}.h
