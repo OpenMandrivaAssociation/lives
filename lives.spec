@@ -4,7 +4,7 @@
 
 Summary:	Linux Video Editing System
 Name:		lives
-Version:	2.6.0
+Version:	2.10.0
 Release:	1
 License:	GPLv3+
 Group:		Video
@@ -16,6 +16,13 @@ Source3:	%{name}-48.png
 Source100:	%{name}.rpmlintrc
 Patch1:		ffmpeg3.0.patch
 
+BuildRequires:  pkgconfig(alsa)
+BuildRequires:  pkgconfig(fftw3f)
+BuildRequires:  pkgconfig(gl)
+BuildRequires:	pkgconfig(gtk+-3.0)
+BuildRequires:	pkgconfig(libavcodec)
+BuildRequires:	pkgconfig(libavformat)
+BuildRequires:	pkgconfig(libavutil)
 BuildRequires:	bison
 BuildRequires:	imagemagick
 BuildRequires:	gpm-devel
@@ -30,7 +37,7 @@ BuildRequires:	pkgconfig(libv4l1)
 BuildRequires:	pkgconfig(libvisual-0.4) >= 0.1.7
 BuildRequires:	pkgconfig(mjpegtools)
 BuildRequires:	pkgconfig(samplerate)
-BuildRequires:	pkgconfig(sdl)
+BuildRequires:	pkgconfig(sdl2)
 BuildRequires:	pkgconfig(theora)
 BuildRequires:	tirpc-devel
 # full featured build for MRB
