@@ -57,7 +57,8 @@ Requires:	frei0r-plugins
 Requires:	imagemagick
 Requires:	libvisual-plugins
 Requires:	mencoder
-Requires:	mkvtoolnix
+# Need build mkvtoolnix first, then enable it.
+#Requires:	mkvtoolnix
 Requires:	mplayer
 Requires:	ogmtools
 Requires:	sox
