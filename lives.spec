@@ -129,7 +129,7 @@ perl -p -i -e 's|"/usr/local/"|&get_home_dir||g' smogrify
 #export CC=gcc
 #export CXX=g++
 %define _disable_ld_no_undefined 1
-%configure2_5x --enable-threads=posix
+%configure --enable-threads=posix --disable-silent-rules --enable-shared --enable-static \
 export LDFLAGS="$LDFLAGS -lpulse"
 %make
 
