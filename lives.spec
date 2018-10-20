@@ -4,7 +4,7 @@
 
 Summary:	Linux Video Editing System
 Name:		lives
-Version:	2.6.0
+Version:	2.10.0
 Release:	1
 License:	GPLv3+
 Group:		Video
@@ -14,8 +14,15 @@ Source1:	%{name}-16.png
 Source2:	%{name}-32.png
 Source3:	%{name}-48.png
 Source100:	%{name}.rpmlintrc
-Patch1:		ffmpeg3.0.patch
+#Patch1:		ffmpeg3.0.patch
 
+BuildRequires:  pkgconfig(alsa)
+BuildRequires:  pkgconfig(fftw3f)
+BuildRequires:  pkgconfig(gl)
+BuildRequires:	pkgconfig(gtk+-3.0)
+BuildRequires:	pkgconfig(libavcodec)
+BuildRequires:	pkgconfig(libavformat)
+BuildRequires:	pkgconfig(libavutil)
 BuildRequires:	bison
 BuildRequires:	imagemagick
 BuildRequires:	gpm-devel
@@ -30,7 +37,7 @@ BuildRequires:	pkgconfig(libv4l1)
 BuildRequires:	pkgconfig(libvisual-0.4) >= 0.1.7
 BuildRequires:	pkgconfig(mjpegtools)
 BuildRequires:	pkgconfig(samplerate)
-BuildRequires:	pkgconfig(sdl)
+BuildRequires:	pkgconfig(sdl2)
 BuildRequires:	pkgconfig(theora)
 BuildRequires:	tirpc-devel
 # full featured build for MRB
@@ -50,7 +57,8 @@ Requires:	frei0r-plugins
 Requires:	imagemagick
 Requires:	libvisual-plugins
 Requires:	mencoder
-Requires:	mkvtoolnix
+# Need build mkvtoolnix first, then enable it.
+#Requires:	mkvtoolnix
 Requires:	mplayer
 Requires:	ogmtools
 Requires:	sox
@@ -83,7 +91,7 @@ This package contains shared libs for LiVES.
 %files -n %{libname}
 %doc COPYING FEATURES NEWS README GETTING.STARTED 
 %{_libdir}/*.so.%{major}*
-
+%{_libdir}/libOSC*
 #----------------------------------------------------------------------------
 
 %package -n %{devname}
@@ -106,7 +114,7 @@ This package contains development files needed to build LiVES plug-ins.
 %prep
 %setup -q
 
-%apply_patches
+#apply_patches
 
 # fix debug spurious-executable
 chmod a-x src/giw/{giwvslider,giwled,giwknob}.h
@@ -119,11 +127,10 @@ automake
 perl -p -i -e 's|"/usr/local/"|&get_home_dir||g' smogrify
 
 %build
-export CC=gcc
-export CXX=g++
+
 %define _disable_ld_no_undefined 1
-%configure2_5x --enable-threads=posix --disable-OSC
-export LDFLAGS="$LDFLAGS -lpulse"
+%configure --enable-threads=posix --disable-silent-rules --enable-shared --enable-static \
+
 %make
 
 %install
