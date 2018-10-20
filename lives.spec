@@ -90,7 +90,7 @@ This package contains shared libs for LiVES.
 %files -n %{libname}
 %doc COPYING FEATURES NEWS README GETTING.STARTED 
 %{_libdir}/*.so.%{major}*
-
+%{_libdir}/libOSC*
 #----------------------------------------------------------------------------
 
 %package -n %{devname}
@@ -126,8 +126,7 @@ automake
 perl -p -i -e 's|"/usr/local/"|&get_home_dir||g' smogrify
 
 %build
-#export CC=gcc
-#export CXX=g++
+
 %define _disable_ld_no_undefined 1
 %configure --enable-threads=posix --disable-silent-rules --enable-shared --enable-static \
 
