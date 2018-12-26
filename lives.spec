@@ -4,7 +4,7 @@
 
 Summary:	Linux Video Editing System
 Name:		lives
-Version:	2.10.0
+Version:	2.10.1
 Release:	1
 License:	GPLv3+
 Group:		Video
@@ -57,8 +57,7 @@ Requires:	frei0r-plugins
 Requires:	imagemagick
 Requires:	libvisual-plugins
 Requires:	mencoder
-# Need build mkvtoolnix first, then enable it.
-#Requires:	mkvtoolnix
+Requires:	mkvtoolnix
 Requires:	mplayer
 Requires:	ogmtools
 Requires:	sox
