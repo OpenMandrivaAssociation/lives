@@ -4,7 +4,7 @@
 
 Summary:	Linux Video Editing System
 Name:		lives
-Version:	2.10.1
+Version:	2.10.2
 Release:	1
 License:	GPLv3+
 Group:		Video
@@ -14,7 +14,6 @@ Source1:	%{name}-16.png
 Source2:	%{name}-32.png
 Source3:	%{name}-48.png
 Source100:	%{name}.rpmlintrc
-#Patch1:		ffmpeg3.0.patch
 
 BuildRequires:  pkgconfig(alsa)
 BuildRequires:  pkgconfig(fftw3f)
@@ -56,9 +55,9 @@ Requires:	dvgrab
 Requires:	frei0r-plugins
 Requires:	imagemagick
 Requires:	libvisual-plugins
-Requires:	mencoder
+Recommends:	mencoder
 Requires:	mkvtoolnix
-Requires:	mplayer
+Recommends:	mplayer
 Requires:	ogmtools
 Requires:	sox
 Requires:	vorbis-tools
@@ -113,8 +112,6 @@ This package contains development files needed to build LiVES plug-ins.
 %prep
 %setup -q
 
-#apply_patches
-
 # fix debug spurious-executable
 chmod a-x src/giw/{giwvslider,giwled,giwknob}.h
 chmod a-x src/giw/{giwvslider,giwled,giwknob}.c
@@ -130,10 +127,10 @@ perl -p -i -e 's|"/usr/local/"|&get_home_dir||g' smogrify
 %define _disable_ld_no_undefined 1
 %configure --enable-threads=posix --disable-silent-rules --enable-shared --enable-static \
 
-%make
+%make_build
 
 %install
-%makeinstall_std
+%make_install
 
 
 
