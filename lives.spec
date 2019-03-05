@@ -76,6 +76,7 @@ video effects and editing system.  It uses common tools for most of its work
 %{_libdir}/%{name}
 %{_datadir}/applications/LiVES.desktop
 %{_iconsdir}/hicolor/*/apps/%{name}.png
+%{_datadir}/pixmaps/%{name}.png
 
 #----------------------------------------------------------------------------
 
