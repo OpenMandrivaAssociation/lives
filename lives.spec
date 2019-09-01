@@ -103,7 +103,7 @@ Provides:	%{name}-devel = %{version}-%{release}
 This package contains development files needed to build LiVES plug-ins.
 
 %files -n %{devname}
-%doc BUGS ABOUT-NLS AUTHORS
+%doc ABOUT-NLS AUTHORS
 %{_includedir}/weed
 %{_libdir}/*.so
 %{_libdir}/pkgconfig/*.pc
