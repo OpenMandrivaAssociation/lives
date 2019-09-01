@@ -10,9 +10,9 @@ License:	GPLv3+
 Group:		Video
 Url:		http://lives-video.com
 Source0:	http://lives-video.com/releases/LiVES-%{version}.tar.bz2
-Source1:	%{name}-16.png
-Source2:	%{name}-32.png
-Source3:	%{name}-48.png
+#Source1:	%{name}-16.png
+#Source2:	%{name}-32.png
+#Source3:	%{name}-48.png
 Source100:	%{name}.rpmlintrc
 
 BuildRequires:  pkgconfig(alsa)
@@ -143,12 +143,12 @@ chmod a-x %{buildroot}%{_libdir}/lives/plugins/effects/realtime/weed/data/fourKl
 
 
 # icons
-mkdir -p %{buildroot}/%{_iconsdir}/hicolor/{16x16,32x32,48x48}/apps
-install -m 644 %{SOURCE1} \
-	%{buildroot}/%{_iconsdir}/hicolor/16x16/apps/%{name}.png
-install -m 644 %{SOURCE2} \
-	%{buildroot}/%{_iconsdir}/hicolor/32x32/apps/%{name}.png
-install -m 644 %{SOURCE3} \
-	%{buildroot}/%{_iconsdir}/hicolor/48x48/apps/%{name}.png
+#mkdir -p %{buildroot}/%{_iconsdir}/hicolor/{16x16,32x32,48x48}/apps
+#install -m 644 %{SOURCE1} \
+#	%{buildroot}/%{_iconsdir}/hicolor/16x16/apps/%{name}.png
+#install -m 644 %{SOURCE2} \
+#	%{buildroot}/%{_iconsdir}/hicolor/32x32/apps/%{name}.png
+#install -m 644 %{SOURCE3} \
+#	%{buildroot}/%{_iconsdir}/hicolor/48x48/apps/%{name}.png
 
 %find_lang lives
