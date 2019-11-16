@@ -4,7 +4,7 @@
 
 Summary:	Linux Video Editing System
 Name:		lives
-Version:	3.0.1
+Version:	3.0.2
 Release:	1
 License:	GPLv3+
 Group:		Video
@@ -22,6 +22,7 @@ BuildRequires:	pkgconfig(gtk+-3.0)
 BuildRequires:	pkgconfig(libavcodec)
 BuildRequires:	pkgconfig(libavformat)
 BuildRequires:	pkgconfig(libavutil)
+BuildRequires:  pkgconfig(libprojectM)
 BuildRequires:	bison
 BuildRequires:	imagemagick
 BuildRequires:	gpm-devel
@@ -55,6 +56,8 @@ Requires:	dvgrab
 Requires:	frei0r-plugins
 Requires:	imagemagick
 Requires:	libvisual-plugins
+Recommends: lame
+Recommends: ladspa
 Recommends:	mencoder
 Requires:	mkvtoolnix
 Recommends:	mplayer
@@ -63,6 +66,7 @@ Requires:	sox
 Requires:	vorbis-tools
 Requires:	xset
 Requires:	youtube-dl
+Recommends: x264
 
 %description
 The Linux Video Editing System (LiVES) is intended to be a simple yet powerful
