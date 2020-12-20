@@ -49,6 +49,7 @@ BuildRequires:	pkgconfig(glee)
 BuildRequires:	pkgconfig(liboil-0.3)
 BuildRequires:	pkgconfig(libavc1394)
 BuildRequires:	pkgconfig(glu)
+BuildRequires:  pkgconfig(libtirpc)
 #
 
 Requires:	cdrecord-cdda2wav
@@ -135,7 +136,7 @@ export CXX=g++
 %define _legacy_common_support 1
 %configure --enable-threads=posix --disable-silent-rules --enable-shared --enable-static \
 
-%make_build
+%make_build CPPFLAGS="`pkg-config --cflags libtirpc` `pkg-config --cflags opencv4`"
 
 %install
 %make_install
