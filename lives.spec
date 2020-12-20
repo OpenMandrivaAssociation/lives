@@ -128,9 +128,10 @@ automake
 perl -p -i -e 's|"/usr/local/"|&get_home_dir||g' smogrify
 
 %build
-
+export CC=gcc
+export CXX=g++
 %define _disable_ld_no_undefined 1
-%define _legacy_common_support 1
+#define _legacy_common_support 1
 %configure --enable-threads=posix --disable-silent-rules --enable-shared --enable-static \
 
 %make_build
