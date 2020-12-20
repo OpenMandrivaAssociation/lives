@@ -1,10 +1,11 @@
 %define major 0
 %define libname %mklibname weed %{major}
 %define devname %mklibname -d weed
+%define staticdevname %mklibname -d weed-static
 
 Summary:	Linux Video Editing System
 Name:		lives
-Version:	3.0.2
+Version:	3.2.0
 Release:	1
 License:	GPLv3+
 Group:		Video
@@ -49,6 +50,7 @@ BuildRequires:	pkgconfig(glee)
 BuildRequires:	pkgconfig(liboil-0.3)
 BuildRequires:	pkgconfig(libavc1394)
 BuildRequires:	pkgconfig(glu)
+BuildRequires:  pkgconfig(libtirpc)
 #
 
 Requires:	cdrecord-cdda2wav
@@ -61,7 +63,7 @@ Recommends: ladspa
 Recommends:	mencoder
 Requires:	mkvtoolnix
 Recommends:	mplayer
-Requires:	ogmtools
+Recommends:	ogmtools
 Requires:	sox
 Requires:	vorbis-tools
 Requires:	xset
@@ -74,7 +76,7 @@ video effects and editing system.  It uses common tools for most of its work
 (mplayer, ImageMagick, GTK+, sox).
 
 %files -f lives.lang
-%doc %{_docdir}/%{name}-%{version}
+%doc %{_docdir}/lives/*
 %{_bindir}/*
 %{_datadir}/%{name}
 %{_libdir}/%{name}
@@ -114,6 +116,23 @@ This package contains development files needed to build LiVES plug-ins.
 
 #----------------------------------------------------------------------------
 
+%package -n %{staticdevname}
+Summary:	Linux Video Editing System - Development static files
+Group:		Video
+Requires:	%{libname} = %{version}-%{release}
+Requires: %{devname} = %{version}-%{release}
+Provides:	%{name}-static-devel = %{version}-%{release}
+
+%description -n %{staticdevname}
+This package contains static development files needed to build LiVES plug-ins.
+
+%files -n %{staticdevname}
+%{_libdir}/libweed-utils.a
+%{_libdir}/libweed.a
+%{_libdir}/libweed_gslice.a
+
+#----------------------------------------------------------------------------
+
 %prep
 %setup -q
 
@@ -128,14 +147,11 @@ automake
 perl -p -i -e 's|"/usr/local/"|&get_home_dir||g' smogrify
 
 %build
-export CC=gcc
-export CXX=g++
 %define _disable_ld_no_undefined 1
-%define _disable_lto 1
 %define _legacy_common_support 1
 %configure --enable-threads=posix --disable-silent-rules --enable-shared --enable-static \
 
-%make_build
+%make_build CPPFLAGS="`pkg-config --cflags libtirpc` `pkg-config --cflags opencv4`"
 
 %install
 %make_install
