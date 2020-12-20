@@ -63,7 +63,7 @@ Recommends: ladspa
 Recommends:	mencoder
 Requires:	mkvtoolnix
 Recommends:	mplayer
-Requires:	ogmtools
+Recommends:	ogmtools
 Requires:	sox
 Requires:	vorbis-tools
 Requires:	xset
