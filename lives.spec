@@ -9,7 +9,7 @@ Version:	3.2.0
 Release:	1
 License:	GPLv3+
 Group:		Video
-Url:		http://lives-video.com
+Url:		https://lives-video.com
 Source0:	http://lives-video.com/releases/LiVES-%{version}.tar.bz2
 #Source1:	%{name}-16.png
 #Source2:	%{name}-32.png
