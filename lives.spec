@@ -16,6 +16,11 @@ Source0:	http://lives-video.com/releases/LiVES-%{version}.tar.bz2
 #Source3:	%{name}-48.png
 Source100:	%{name}.rpmlintrc
 
+BuildRequires:	autoconf
+BuildRequires:	automake
+BuildRequires:	libtool-base
+BuildRequires:	slibtool
+BuildRequires:	make
 BuildRequires:  pkgconfig(alsa)
 BuildRequires:  pkgconfig(fftw3f)
 BuildRequires:  pkgconfig(gl)
