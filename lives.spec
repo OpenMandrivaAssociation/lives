@@ -6,7 +6,7 @@
 Summary:	Linux Video Editing System
 Name:		lives
 Version:	3.2.0
-Release:	1
+Release:	2
 License:	GPLv3+
 Group:		Video
 Url:		https://lives-video.com
