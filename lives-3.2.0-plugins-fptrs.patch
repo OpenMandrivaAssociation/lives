@@ -1,0 +1,14 @@
+Fix C23 incompatible function pointer casts in video plugin loader.
+
+--- a/src/plugins.c
++++ b/src/plugins.c
+@@ -1215,8 +1215,8 @@
+     (*vpp->weed_setup)(weed_bootstrap);
+   }
+ 
+-  vpp->get_description = (const char *(*)())dlsym(handle, "get_description");
+-  vpp->get_init_rfx = (const char *(*)())dlsym(handle, "get_init_rfx");
++  vpp->get_description = (const char *(*)(void))dlsym(handle, "get_description");
++  vpp->get_init_rfx = (const char *(*)(int))dlsym(handle, "get_init_rfx");
+ 
+   vpp->get_play_params = (const weed_plant_t **(*)(weed_bootstrap_f))dlsym(handle, "get_play_params");

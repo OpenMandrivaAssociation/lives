@@ -18,6 +18,7 @@ Source100:	%{name}.rpmlintrc
 Patch0:		lives-3.2.0-ffmpeg9.patch
 Patch1:		lives-3.2.0-htmsocket-bool.patch
 Patch2:		lives-3.2.0-ffmpeg9-apis.patch
+Patch3:		lives-3.2.0-plugins-fptrs.patch
 
 BuildRequires:	autoconf
 BuildRequires:	automake
@@ -158,6 +159,8 @@ perl -p -i -e 's|"/usr/local/"|&get_home_dir||g' smogrify
 %build
 %define _disable_ld_no_undefined 1
 %define _legacy_common_support 1
+# C23 treats (*)() as (*)(void); remaining plugin dlsym casts still use K&R
+%global optflags %{optflags} -Wno-incompatible-function-pointer-types
 %configure --enable-threads=posix --disable-silent-rules --enable-shared --enable-static \
 
 # slibtool forwards --tag=disable-static to clang, which rejects it
