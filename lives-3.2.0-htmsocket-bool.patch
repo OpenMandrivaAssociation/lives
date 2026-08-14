@@ -1,0 +1,13 @@
+--- a/libOSC/sendOSC/htmsocket.h	2004-08-13 00:00:00.000000000 +0000
++++ b/libOSC/sendOSC/htmsocket.h	2026-08-14 00:00:00.000000000 +0000
+@@ -34,7 +34,9 @@
+ #define TRUE 1
+ #define FALSE 0
+ #endif
+-typedef int bool;
++#ifndef __cplusplus
++#include <stdbool.h>
++#endif
+ 
+ /* open a socket for HTM communication to given  host on given portnumber */
+ /* if host is 0 then UNIX protocol is used (i.e. local communication) */

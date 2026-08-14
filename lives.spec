@@ -16,6 +16,8 @@ Source0:	http://lives-video.com/releases/LiVES-%{version}.tar.bz2
 #Source3:	%{name}-48.png
 Source100:	%{name}.rpmlintrc
 Patch0:		lives-3.2.0-ffmpeg9.patch
+Patch1:		lives-3.2.0-htmsocket-bool.patch
+Patch2:		lives-3.2.0-ffmpeg9-apis.patch
 
 BuildRequires:	autoconf
 BuildRequires:	automake
