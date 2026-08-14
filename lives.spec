@@ -6,7 +6,7 @@
 Summary:	Linux Video Editing System
 Name:		lives
 Version:	3.2.0
-Release:	2
+Release:	3
 License:	GPLv3+
 Group:		Video
 Url:		https://lives-video.com
@@ -15,6 +15,7 @@ Source0:	http://lives-video.com/releases/LiVES-%{version}.tar.bz2
 #Source2:	%{name}-32.png
 #Source3:	%{name}-48.png
 Source100:	%{name}.rpmlintrc
+Patch0:		lives-3.2.0-ffmpeg9.patch
 
 BuildRequires:	autoconf
 BuildRequires:	automake
@@ -140,6 +141,7 @@ This package contains static development files needed to build LiVES plug-ins.
 
 %prep
 %setup -q
+%autopatch -p1
 
 # fix debug spurious-executable
 chmod a-x src/giw/{giwvslider,giwled,giwknob}.h
@@ -156,7 +158,7 @@ perl -p -i -e 's|"/usr/local/"|&get_home_dir||g' smogrify
 %define _legacy_common_support 1
 %configure --enable-threads=posix --disable-silent-rules --enable-shared --enable-static \
 
-%make_build CPPFLAGS="`pkg-config --cflags libtirpc` `pkg-config --cflags opencv4`"
+%make_build CPPFLAGS="`pkg-config --cflags libtirpc` `pkg-config --cflags opencv5`"
 
 %install
 %make_install
