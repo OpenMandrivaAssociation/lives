@@ -161,6 +161,7 @@ perl -p -i -e 's|"/usr/local/"|&get_home_dir||g' smogrify
 %define _legacy_common_support 1
 # C23 breaks CALL_* macros; do not put gnu17 in CXXFLAGS
 export CFLAGS="${CFLAGS:-%{optflags}} -std=gnu17 -Wno-incompatible-function-pointer-types"
+export CXXFLAGS="${CXXFLAGS:-%{optflags}} -Wno-register"
 %configure --enable-threads=posix --disable-silent-rules --enable-shared --enable-static \
 
 # slibtool forwards --tag=disable-static to clang, which rejects it
