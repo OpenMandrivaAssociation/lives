@@ -139,6 +139,8 @@ This package contains static development files needed to build LiVES plug-ins.
 %{_libdir}/libweed-utils.a
 %{_libdir}/libweed.a
 %{_libdir}/libweed_gslice.a
+%{_libdir}/libOSC.a
+%{_libdir}/libOSC_client.a
 
 #----------------------------------------------------------------------------
 
