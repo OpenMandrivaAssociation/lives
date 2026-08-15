@@ -22,6 +22,7 @@ Patch3:		lives-3.2.0-plugins-fptrs.patch
 
 BuildRequires:	autoconf
 BuildRequires:	automake
+BuildRequires:	gettext
 BuildRequires:	libtool-base
 BuildRequires:	slibtool
 BuildRequires:	make
