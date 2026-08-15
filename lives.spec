@@ -106,7 +106,6 @@ This package contains shared libs for LiVES.
 %files -n %{libname}
 %doc COPYING FEATURES NEWS README GETTING.STARTED 
 %{_libdir}/*.so.%{major}*
-%{_libdir}/libOSC*
 #----------------------------------------------------------------------------
 
 %package -n %{devname}
