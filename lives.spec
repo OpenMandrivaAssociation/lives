@@ -1,3 +1,5 @@
+# C23 treats (*)() as a zero-arg prototype; CALL_* macros then fail
+%global optflags %{optflags} -std=gnu17 -Wno-incompatible-function-pointer-types
 %define major 0
 %define libname %mklibname weed %{major}
 %define devname %mklibname -d weed
@@ -159,8 +161,6 @@ perl -p -i -e 's|"/usr/local/"|&get_home_dir||g' smogrify
 %build
 %define _disable_ld_no_undefined 1
 %define _legacy_common_support 1
-# C23 treats (*)() as (*)(void); remaining plugin dlsym casts still use K&R
-%global optflags %{optflags} -Wno-incompatible-function-pointer-types
 %configure --enable-threads=posix --disable-silent-rules --enable-shared --enable-static \
 
 # slibtool forwards --tag=disable-static to clang, which rejects it
